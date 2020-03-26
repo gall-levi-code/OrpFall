@@ -12,9 +12,8 @@ URL = os.getenv('DISCORD_WEBHOOK')
 
 client = discord.Client()
 
-TESTERS = [108062945740640256, 219093637986779138, 108072654577152000]
+TESTERS = [108062945740640256, 219093637986779138, 108072654577152000, 262112443361132545]
 CREATION_CHANNEL = 672554910566580224
-
 ROLES = [672561758023450675, 672561940895105038]
 
 SELECTION = {}
@@ -131,8 +130,12 @@ async def on_message(message):
     else:
         USER_MODES[author_id] = CreateCharacter(author_id)
         mode_info = USER_MODES[author_id]
+
+
     if message.content == "Taco":
         breakpoint()
+
+
     if mode_info.MODE > 0 and mode_info.author == author_id:
         if mode_info.MODE == 1:
             await message.channel.send("Mode 1 is active, moving on to mode 2.")
@@ -160,6 +163,8 @@ async def on_message(message):
         return
     else:
         pass
+
+
     if message.content == "!clear":
         await message.channel.purge()
         return
@@ -194,11 +199,13 @@ async def on_message(message):
         else:
             await message.channel.send("Sorry you're using the wrong channel to create your character.")
 
+    # Actual Messages being passed.
+
     if (author_id in TESTERS) and channel_id == TEST_CHANNEL and author_id in SELECTION:
         async with send_channel.typing():
             post(URL, CHARACTERS[SELECTION[author_id]], content)
             #await send_channel.send(f"{content}")
             await message.delete()
-    breakpoint()
+    #breakpoint()
 
 client.run(TOKEN)
